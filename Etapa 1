@@ -1,4 +1,4 @@
-/*Equipe: Tatiele Daniela Silva Cavalcanti - Subturma C*/
+/*Equipe: Tatiele Daniela Silva Cavalcanti - Subturma C(Líder)*/
 function setup() {
   createCanvas(400, 400);
 }
