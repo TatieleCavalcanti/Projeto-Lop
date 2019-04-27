@@ -1,0 +1,9 @@
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(15);
+  ellipse(200 , 360 , 55 , 55);
+  square(175 , 15 , 55);
+}
