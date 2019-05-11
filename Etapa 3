@@ -1,0 +1,32 @@
+/*Equipe: Tatiele Daniela Silva Cavalcanti - Subturma C (Líder)*/
+var ex = 200;
+var ey = 360;
+var qx = 175;
+var qy = 15;
+function setup() {
+  createCanvas(400, 400);
+}
+
+function draw() {
+  background(15);
+  rect(qx , qy , 55);
+  qx = qx + 5
+  if(qx > 400){
+     qx = -random(900)
+  }
+  if(keyIsDown(RIGHT_ARROW)){
+     ex = ex + 6;
+  }
+  if(keyIsDown(LEFT_ARROW)){
+     ex = ex - 6;
+  }
+  if(keyIsDown(UP_ARROW)){
+    ey = ey - 6;
+  }
+  if(keyIsDown(DOWN_ARROW)){
+    ey = ey + 6;
+  }
+  ellipse(ex , ey , 55 , 55);
+ 
+  square(qx , qy , 55);
+}
