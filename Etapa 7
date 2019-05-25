@@ -1,0 +1,81 @@
+/* Equipe: Tatiele Daniela Silva Cavalcanti  - Subturma C (Líder) */
+var ex = 200;
+var ey = 360;
+var qx = 175;
+var qy = 35;
+var raiox = 55;
+var raioy = 55;
+var xt = 0;
+var yt = 0;
+var tiro = false;
+var vidas = 3;
+var pontos = 0;
+var dificuldade = 1;
+var vqx = [];
+var vqy = [];
+var qtObjetos = 4;
+var vVel = [];
+
+
+function setup (){
+  createCanvas (400, 400);
+  for(var i = 0; i < qtObjetos; i++){
+    vqx[i] = random(0,400);
+    vqy[i] = - random(0,400);
+    vVel[i] = random(1,5);
+  }
+}
+function draw (){
+  background (220);
+  fill (0, 102, 153);
+  textSize (18);
+  text ('Vidas:' + vidas, 10, 30);
+  text ('Pontos:' + pontos, 150, 30);
+  text ('Nível:' + dificuldade, 300, 30);
+
+  
+
+  if (keyIsDown (CONTROL) && tiro == false) {
+      xt = ex;
+      yt = ey;
+      tiro = true;
+  }
+
+  if (tiro == true) {
+     ellipse (xt, yt, 4, 4);
+     yt = yt - 10;
+     if (yt <0) {
+        tiro = false;
+     }
+  }
+
+  if (keyIsDown (RIGHT_ARROW)) {
+     ex = ex + 6;
+  }
+
+  if (keyIsDown (LEFT_ARROW)) {
+     ex = ex - 6;
+  }
+  
+  if (keyIsDown (UP_ARROW)) {
+    ey = ey - 6;
+  }
+  
+  if (keyIsDown (DOWN_ARROW)) {
+    ey = ey + 6;
+  }
+  
+  ellipse (ex, ey, 55, 55);
+  
+  for(var i = 0; i < qtObjetos; i++){
+    vqy[i] = vqy[i] + vVel[i];
+    rect (vqx[i], vqy[i], 55, 55);
+    if (vqy[i] > 400) {
+     vqy[i] = -random (900)
+    }
+    if(dist (ex, ey, vqx[i], vqy[i]) < raiox + raioy){
+     ex = 200;
+     ey = 360;
+    }
+  }
+}
