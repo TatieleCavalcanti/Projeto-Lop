@@ -1,0 +1,183 @@
+/ * Equipe: Tatiele Daniela Cavalcanti Silva - Subturma C (Líder) * /
+var ex = 200;
+var ey = 360;
+var qx = 175;
+var qy = 35;
+var raiox = 55;
+var raioy = 55;
+var xt = 0;
+var yt = 0;
+var tiro = false;
+var vidas = 3;
+var pontos = 0;
+var dificuldade = 0;
+var barreiraDePontos = 10;
+var vqx = [];
+var vqy = [];
+var qtObjetos = 6;
+var vVel = [];
+var tela = 1;
+
+
+let imgRosquinha;
+let imgSimpsons;
+let marSimpsons;
+let imgNuvens;
+let imgMar;
+let imgGameOver;
+let imgGameOver2;
+let imgTela;
+let imgFamilia;
+let imgEnter;
+
+
+function preload() {
+  imgSimpsons =
+loadImage('simpsons_PNG84.png');
+  imgRosquinha = 
+loadImage('simpsonsDuff.png');
+  marSimpsons = 
+loadImage('marSimpsons.jpg');
+  imgNuvens = 
+loadImage('nuvens.jpg');
+  imgMar = 
+loadImage('mar4.jpg');
+  imgGameOver =      
+loadImage('GameOver1.jpeg');
+  imgGameOver2 =
+loadImage('gameover2.png');
+  imgTela =
+loadImage('aTela-1.png');
+  imgFamilia = 
+loadImage('FamiliaSimpsons-1.png');
+  imgEnter =
+loadImage('enter.png');
+  
+}
+
+function setup() {
+  createCanvas(700, 500);
+  for (var i = 0; i < qtObjetos; i++) {
+    vqx[i] = random(0, 600);
+    vqy[i] = -random(0, 500);
+    vVel[i] = random(1, 5);
+  }
+}
+
+function draw() {
+
+
+  if (tela == 1) {
+    background(135, 206, 235);
+    image(imgTela, 150, 20);
+    image(imgFamilia, 200, 150);
+    image(imgEnter, 480, 420);
+    textSize(20);
+    fill(0, 0 ,0 );
+    text("", 450, 480);
+    if (keyIsDown(ENTER)) {
+      tela = 2;
+    }
+  }
+  if (tela == 2) {
+    background(220);
+
+    image(marSimpsons, 500, 500);
+    image(imgNuvens, 100, 250);
+    image(imgSimpsons, ex, ey, 120, 110);
+    image(imgMar, 100, 470);
+    image(imgMar, 300, 470);
+    image(imgMar, 520, 470);
+    imageMode(CENTER);
+    fill(0, 102, 153);
+    textSize(18);
+    text('Vidas:' + vidas, 20, 30);
+    text('Pontos:' + pontos, 230, 30);
+    text('Nível:' + dificuldade, 490, 30);
+    // implentação de pontos
+
+
+    if (pontos > barreiraDePontos) {
+      dificuldade++;
+      barreiraDePontos = barreiraDePontos + 10;
+    }
+
+
+    if (keyIsDown(CONTROL) && tiro == false) {
+      xt = ex;
+      yt = ey;
+      tiro = true;
+    }
+
+    if (tiro == true) {
+      ellipse(xt, yt, 4, 4);
+      yt = yt - 10;
+      if (yt < 0) {
+        tiro = false;
+      }
+    }
+
+    if (keyIsDown(RIGHT_ARROW)) {
+      ex = ex + 6;
+    }
+
+    if (keyIsDown(LEFT_ARROW)) {
+      ex = ex - 6;
+    }
+
+    if (keyIsDown(UP_ARROW)) {
+      ey = ey - 6;
+    }
+
+    if (keyIsDown(DOWN_ARROW)) {
+      ey = ey + 6;
+    }
+
+    //ellipse (ex, ey, 25, 25);
+
+    for (var i = 0; i < qtObjetos; i++) {
+      vqy[i] = vqy[i] + vVel[i];
+      //rect (vqx[i], vqy[i], 35, 35);
+      image(imgRosquinha, vqx[i], vqy[i], 40, 40);
+      if (vqy[i] > 500) {
+        vqy[i] = -random(1500)
+      }
+      if (dist(ex, ey, vqx[i], vqy[i]) < 25 + 25) {
+        ex = 200;
+        ey = 360;
+        vidas = vidas - 1;
+        vqx[i] = random(0, 600);
+        vqy[i] = -random(0, 500);
+      }
+      if (dist(xt, yt, vqx[i], vqy[i]) < 25 + 25) {
+        vqx[i] = random(0, 600);
+        vqy[i] = -random(0, 500);
+        tiro = false;
+        pontos = pontos + 10;
+      }
+      if (ey > 400) {
+        ey = ey - 10;
+      }
+      if (ey < 0) {
+        ey = ey + 40;
+      }
+      if (ex > 650) {
+        ex = ex - 10;
+      }
+      if (ex < 0) {
+        ex = ex + 50;
+      }
+    }
+    if (vidas === 0) {
+      tela = 3;
+    }
+  }
+  if (tela == 3) {
+    background(1000);
+    image(imgGameOver,350, 250);
+    image(imgGameOver2, 125, 120);
+    textSize(30);
+    fill(1, 1, 1);
+    text("If you drink, dont drive!", 20, 350);
+  }
+}
